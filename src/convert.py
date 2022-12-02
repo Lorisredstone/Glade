@@ -28,12 +28,14 @@ class Convertiseur:
             if instruction.opname in self.modules_list:
                 self.add_to_c(f"\n{open(self.modules_list[instruction.opname], 'r').read()}")
                 self.add_to_c("\n")
+        if any(instruction.argval == "print" and instruction.opname == "LOAD_NAME" for instruction in bytecode):
+            self.add_to_c(f"\n{open('config/modules/PRINT.c', 'r').read()}")
+            self.add_to_c("\n")
         
         self.add_to_c("\nint main() {\n")
         self.indent_level = 4
         self.add_to_c("Stack_t *stack = create_stack(10);\n")
         
-        print(bytecode)
         for instruction in bytecode:
             self.convert(instruction)
             
@@ -45,10 +47,10 @@ class Convertiseur:
     def convert(self, instruction:dis.Instruction) -> None:
         if self.debug:
             print(f"Converting {instruction}")
+            self.add_to_c(f"// {instruction}\n")
             
         current_hash = self.get_next_hash()
         
-        self.add_to_c(f"// {instruction}\n")
         match instruction.opname:
             case "LOAD_CONST":
                 self.add_to_c(f"Element_t *element{current_hash} = malloc(sizeof(Element_t));\n")
@@ -88,6 +90,9 @@ class Convertiseur:
                 self.add_to_c("\n")
             case "BINARY_ADD":
                 self.add_to_c(f"binary_add(stack);\n")
+                self.add_to_c("\n")
+            case "POP_TOP":
+                self.add_to_c(f"pop(stack);\n")
                 self.add_to_c("\n")
             case _:
                 print(f"Unknown instruction : {instruction.opname}")

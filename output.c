@@ -131,56 +131,101 @@ void binary_add(Stack_t *stack) {
     }
 }
 
+void print(Stack_t *stack, int nb_args) {
+    Element_t **elements = (Element_t **) malloc(sizeof(Element_t) * nb_args);
+    for (int i = 0; i < nb_args; i++) {
+        elements[i] = pop(stack);
+    }
+    for (int i = nb_args - 1; i >= 0; i--) {
+        if (elements[i]->data_type == INT_T) {
+            printf("%d", elements[i]->value_int);
+        } else if (elements[i]->data_type == FLOAT_T) {
+            printf("%f", elements[i]->value_float);
+        } else if (elements[i]->data_type == STRING_T) {
+            printf("%s", elements[i]->value_str);
+        } else {
+            printf("ERROR : Cannot print %d", elements[i]->data_type);
+            exit(1);
+        }
+    }
+    // we add a newline at the end
+    printf("\n");
+    // than we free the elements
+    for (int i = 0; i < nb_args; i++) {
+        free(elements[i]);
+    }
+    free(elements);
+    // than we add a none element to the stack
+    Element_t *none = (Element_t *) malloc(sizeof(Element_t));
+    none->data_type = NONE_T;
+    none->is_none = 1;
+    push(stack, none);
+}
+
 int main() {
     Stack_t *stack = create_stack(10);
     // Instruction(opname='LOAD_CONST', opcode=100, arg=0, argval=1, argrepr='1', offset=0, starts_line=1, is_jump_target=False)
-    Element_t *element4320 = malloc(sizeof(Element_t));
-    element4320->data_type = INT_T;
-    element4320->value_int = 1;
-    push(stack, element4320);
+    Element_t *element4524 = malloc(sizeof(Element_t));
+    element4524->data_type = INT_T;
+    element4524->value_int = 1;
+    push(stack, element4524);
     
     // Instruction(opname='STORE_NAME', opcode=90, arg=0, argval='a', argrepr='a', offset=2, starts_line=None, is_jump_target=False)
-    Element_t *element1739;
-    element1739 = pop(stack);
-    add_variable("main_a", element1739);
+    Element_t *element8525;
+    element8525 = pop(stack);
+    add_variable("main_a", element8525);
     
     // Instruction(opname='LOAD_CONST', opcode=100, arg=1, argval=2, argrepr='2', offset=4, starts_line=2, is_jump_target=False)
-    Element_t *element1768 = malloc(sizeof(Element_t));
-    element1768->data_type = INT_T;
-    element1768->value_int = 2;
-    push(stack, element1768);
+    Element_t *element5815 = malloc(sizeof(Element_t));
+    element5815->data_type = INT_T;
+    element5815->value_int = 2;
+    push(stack, element5815);
     
     // Instruction(opname='STORE_NAME', opcode=90, arg=1, argval='b', argrepr='b', offset=6, starts_line=None, is_jump_target=False)
-    Element_t *element3229;
-    element3229 = pop(stack);
-    add_variable("main_b", element3229);
+    Element_t *element2271;
+    element2271 = pop(stack);
+    add_variable("main_b", element2271);
     
     // Instruction(opname='LOAD_NAME', opcode=101, arg=0, argval='a', argrepr='a', offset=8, starts_line=3, is_jump_target=False)
-    Element_t *element1229;
-    element1229 = get_variable("main_a");
-    push(stack, element1229);
+    Element_t *element7077;
+    element7077 = get_variable("main_a");
+    push(stack, element7077);
     
     // Instruction(opname='LOAD_NAME', opcode=101, arg=1, argval='b', argrepr='b', offset=10, starts_line=None, is_jump_target=False)
-    Element_t *element1736;
-    element1736 = get_variable("main_b");
-    push(stack, element1736);
+    Element_t *element7602;
+    element7602 = get_variable("main_b");
+    push(stack, element7602);
     
     // Instruction(opname='BINARY_ADD', opcode=23, arg=None, argval=None, argrepr='', offset=12, starts_line=None, is_jump_target=False)
     binary_add(stack);
     
     // Instruction(opname='STORE_NAME', opcode=90, arg=2, argval='c', argrepr='c', offset=14, starts_line=None, is_jump_target=False)
-    Element_t *element1943;
-    element1943 = pop(stack);
-    add_variable("main_c", element1943);
+    Element_t *element4938;
+    element4938 = pop(stack);
+    add_variable("main_c", element4938);
     
-    // Instruction(opname='LOAD_CONST', opcode=100, arg=2, argval=None, argrepr='None', offset=16, starts_line=None, is_jump_target=False)
-    Element_t *element5550 = malloc(sizeof(Element_t));
-    element5550->data_type = NONE_T;
-    element5550->is_none = 1;
-    push(stack, element5550);
+    // Instruction(opname='LOAD_NAME', opcode=101, arg=3, argval='print', argrepr='print', offset=16, starts_line=4, is_jump_target=False)
+    Element_t *element4149;
+    element4149 = get_variable("main_print");
+    push(stack, element4149);
     
-    // Instruction(opname='RETURN_VALUE', opcode=83, arg=None, argval=None, argrepr='', offset=18, starts_line=None, is_jump_target=False)
-    Element_t *element8645;
-    element8645 = pop(stack);
-    return element8645->is_none ? 0 : 1;    
+    // Instruction(opname='LOAD_NAME', opcode=101, arg=2, argval='c', argrepr='c', offset=18, starts_line=None, is_jump_target=False)
+    Element_t *element6064;
+    element6064 = get_variable("main_c");
+    push(stack, element6064);
+    
+    // Instruction(opname='CALL_FUNCTION', opcode=131, arg=1, argval=1, argrepr='', offset=20, starts_line=None, is_jump_target=False)
+    // Instruction(opname='POP_TOP', opcode=1, arg=None, argval=None, argrepr='', offset=22, starts_line=None, is_jump_target=False)
+    pop(stack);
+    
+    // Instruction(opname='LOAD_CONST', opcode=100, arg=2, argval=None, argrepr='None', offset=24, starts_line=None, is_jump_target=False)
+    Element_t *element5807 = malloc(sizeof(Element_t));
+    element5807->data_type = NONE_T;
+    element5807->is_none = 1;
+    push(stack, element5807);
+    
+    // Instruction(opname='RETURN_VALUE', opcode=83, arg=None, argval=None, argrepr='', offset=26, starts_line=None, is_jump_target=False)
+    Element_t *element7996;
+    element7996 = pop(stack);
+    return element7996->is_none ? 0 : 1;    
 }
