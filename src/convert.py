@@ -1,6 +1,7 @@
 from typing import List
 import random
 import dis
+
 class Convertiseur:
     def __init__(self, code:str, debug:bool = False) -> None:
         self.code:str = code
@@ -47,6 +48,7 @@ class Convertiseur:
     def convert(self, instruction:dis.Instruction) -> None:
         if self.debug:
             print(f"Converting {instruction}")
+            # print(list(dis.Bytecode(instruction.argval)))
             self.add_to_c(f"// {instruction}\n")
             
         current_hash = self.get_next_hash()
