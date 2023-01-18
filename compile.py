@@ -3,8 +3,8 @@ import os
 
 mypy_command = "mypy main.py"
 python_command = "python main.py"
-compile_command = "gcc -o output.exe output.c"
-run_command = ".\output.exe"
+compile_command = "gcc -o out\\output.exe out\\output.c"
+run_command = ".\\out\\output.exe"
 
 # run mypy with subprocess
 p = subprocess.Popen(mypy_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

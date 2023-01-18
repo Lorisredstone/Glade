@@ -10,8 +10,6 @@
 #define BOOL_T 3
 #define NONE_T 4
 
-#define False false
-#define True true
 typedef struct Element_t {
     int data_type;
     char *value_str;

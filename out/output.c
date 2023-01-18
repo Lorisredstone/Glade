@@ -106,35 +106,35 @@ void remove_variable(char *name) {
 int main() {
     Stack_t *stack = create_stack(10);
     // Instruction(opname='LOAD_CONST', opcode=100, arg=0, argval=1, argrepr='1', offset=0, starts_line=1, is_jump_target=False)
-    Element_t *element = malloc(sizeof(Element_t));
-    element->data_type = INT_T;
-    element->value_int = 1;
-    push(stack, element);
+    Element_t *element7747 = malloc(sizeof(Element_t));
+    element7747->data_type = INT_T;
+    element7747->value_int = 1;
+    push(stack, element7747);
     
     // Instruction(opname='STORE_NAME', opcode=90, arg=0, argval='a', argrepr='a', offset=2, starts_line=None, is_jump_target=False)
-    Element_t *element;
-    element = pop(stack);
-    add_variable("main_a", element);
+    Element_t *element8017;
+    element8017 = pop(stack);
+    add_variable("main_a", element8017);
     
     // Instruction(opname='LOAD_CONST', opcode=100, arg=1, argval=2, argrepr='2', offset=4, starts_line=2, is_jump_target=False)
-    Element_t *element = malloc(sizeof(Element_t));
-    element->data_type = INT_T;
-    element->value_int = 2;
-    push(stack, element);
+    Element_t *element1942 = malloc(sizeof(Element_t));
+    element1942->data_type = INT_T;
+    element1942->value_int = 2;
+    push(stack, element1942);
     
     // Instruction(opname='STORE_NAME', opcode=90, arg=1, argval='b', argrepr='b', offset=6, starts_line=None, is_jump_target=False)
-    Element_t *element;
-    element = pop(stack);
-    add_variable("main_b", element);
+    Element_t *element9532;
+    element9532 = pop(stack);
+    add_variable("main_b", element9532);
     
     // Instruction(opname='LOAD_CONST', opcode=100, arg=2, argval=None, argrepr='None', offset=8, starts_line=None, is_jump_target=False)
-    Element_t *element = malloc(sizeof(Element_t));
-    element->data_type = NONE_T;
-    element->is_none = 1;
-    push(stack, element);
+    Element_t *element1995 = malloc(sizeof(Element_t));
+    element1995->data_type = NONE_T;
+    element1995->is_none = 1;
+    push(stack, element1995);
     
     // Instruction(opname='RETURN_VALUE', opcode=83, arg=None, argval=None, argrepr='', offset=10, starts_line=None, is_jump_target=False)
-    Element_t *element;
-    element = pop(stack);
-    return element->is_none ? 0 : 1;    
+    Element_t *element6572;
+    element6572 = pop(stack);
+    return element6572->is_none ? 0 : 1;    
 }

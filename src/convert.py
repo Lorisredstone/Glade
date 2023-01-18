@@ -1,5 +1,6 @@
 from typing import List
 import random
+import code
 import dis
 
 class Convertiseur:
@@ -48,7 +49,10 @@ class Convertiseur:
     def convert(self, instruction:dis.Instruction) -> None:
         if self.debug:
             print(f"Converting {instruction}")
-            # print(list(dis.Bytecode(instruction.argval)))
+            try:
+                print(list(dis.Bytecode(instruction.argval)))
+            except Exception as e:
+                pass
             self.add_to_c(f"// {instruction}\n")
             
         current_hash = self.get_next_hash()
@@ -71,6 +75,8 @@ class Convertiseur:
                 elif instruction.argval is None:
                     self.add_to_c(f'element{current_hash}->data_type = NONE_T;\n')
                     self.add_to_c(f'element{current_hash}->is_none = 1;\n')
+                elif type(instruction.argval) == type((lambda x:x).__code__):
+                    ...
                 else:
                     print(f"Unknown type in LOAD_CONST : {type(instruction.argval)}")
                     exit(1)
