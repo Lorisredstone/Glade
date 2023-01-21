@@ -95,7 +95,7 @@ class Pytointermediate:
         
         return tokens
     
-    def parser(self, tokens:List[LocalTokens | Value]) -> IProgramme: # sourcery skip: low-code-quality
+    def parser(self, tokens:List[LocalTokens | Value]) -> IProgramme: # sourcery skip: hoist-similar-statement-from-if, hoist-statement-from-if, low-code-quality, merge-duplicate-blocks, remove-redundant-if
         prog = IProgramme([])
         index = 0
         while (token := tokens[index]) != LocalTokens.EOF:
