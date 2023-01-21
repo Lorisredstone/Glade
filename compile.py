@@ -16,7 +16,7 @@ if p.stdout is None:
     exit(1)
 if p.stdout.read() == b'Success: no issues found in 1 source file\r\n':
     colorprint.colorprint("Mypy passed for the whole project !", color = "green")
-    os.system(python_command)   
+    os.system(python_command)
     os.system(gcc_command)         
     os.system(run_command)         
 
