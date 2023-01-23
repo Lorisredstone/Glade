@@ -38,6 +38,7 @@ class Pytointermediate:
             exit(1)
         if p.stdout.read() == b'Success: no issues found in 1 source file\r\n':
             colorprint.colorprint(f"Mypy passed for {self.file} !", color = "green")
+            self.convert()
             return 0
         else:
             colorprint.colorprint(f"Mypy failed for {self.file} !", color = "red")
