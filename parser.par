@@ -1,0 +1,3 @@
+programame :: [expression]
+expression :: assignexpression
+assignexpression :: {var}:{type} = {value}
