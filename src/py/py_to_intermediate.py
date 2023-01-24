@@ -5,7 +5,7 @@ import os
 import re
 
 from src.py.lexer import Lexer
-from src.py.parser import Parser
+from mod.parser.parserlib import Parser
 
 import mod.colorprint as colorprint
 
@@ -54,7 +54,7 @@ class Pytointermediate:
         raw_content[-1] = raw_content[-1]+"\n" # beacuse we get eof otherwise
         # we lex it
         lexer = Lexer(raw_content)
-        parser = Parser(lexer.run())
+        parser = Parser(lexer.run(), "src/py/parser.par")
         return parser.run()
         
 """
