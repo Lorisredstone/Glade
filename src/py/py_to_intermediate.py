@@ -5,7 +5,7 @@ import os
 import re
 
 from src.py.lexer import Lexer
-from mod.parser.parserlib import Parser
+import src.py.py_parser as Py_parser
 
 import mod.colorprint as colorprint
 
@@ -54,10 +54,5 @@ class Pytointermediate:
         raw_content[-1] = raw_content[-1]+"\n" # beacuse we get eof otherwise
         # we lex it
         lexer = Lexer(raw_content)
-        parser = Parser(lexer.run(), "src/py/parser.par")
+        parser = Py_parser.Parser(lexer.run())
         return parser.run()
-        
-"""
-# we only parse thing like `<name>[( ):( )<type>]( )=( )<value>` for now
-# we use regex for this
-"""
