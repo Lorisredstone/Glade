@@ -26,8 +26,8 @@ class Lexer:
         buffer:str = ""
         for char in self.preparsed:
             if char in Tok.SEPARATORS + Tok.OPERATORS:
-                internal_spaced += " " + buffer + " "
-                internal_spaced += " " + char + " "
+                internal_spaced += f" {buffer} "
+                internal_spaced += f" {char} "
                 buffer = ""
                 continue
             buffer += char
