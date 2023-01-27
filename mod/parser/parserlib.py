@@ -4,6 +4,7 @@ from enum import Enum, IntEnum, auto
 import src.py.lexerTokens as Tok
 
 import mod.exceptions as Ex
+import mod.inter.interlib as Ilib
 
 class Types(Enum):
     # Element types
@@ -31,25 +32,12 @@ class Parser:
         self.programme:List[Line] = []
 
     def run(self) -> None:
-        self.parselines()
         print(f"matching : {self.match(self.programme[0], self.tokens)}")
+        print(Ilib.Programme([Ilib.Assign("a", Ilib.Value("1", Ilib.TYPES.INT))]).dict())
+        print(self.programme)
         
     def add_line(self, line:Line) -> None:
         self.programme.append(line)
-        
-    def parselines(self):
-        # we regroup the List[Line] in a line
-        while len(self.programme) > 1:
-            line = self.programme.pop()
-            for i in range(len(self.programme)):
-                for j in range(len(self.programme[i].content)):
-                    if isinstance(self.programme[i].content[j], Expression):
-                        # check if the expression is a later defined type
-                        if self.programme[i].content[j].type == Types.LATER_DEFINED:
-                            new_content = self.programme[i].content[:j] + line.content + self.programme[i].content[j+1:]
-                            self.programme[i] = Line(self.programme[i].name, new_content)
-                            break
-                        # TODO : dont forget to add the other types of expressions later
         
     def match(self, line:Line, tokens:List[Tok.Token]) -> bool:
         index_line:int = 0
@@ -59,10 +47,12 @@ class Parser:
                 # we dont care for the value of the identifier, we just want to know if it is an identifier
                 index_line += 1
                 index_token += 1
-            if isinstance(line.content[index_line], Tok.Separator):
+            elif isinstance(line.content[index_line], Tok.Separator):
                 if line.content[index_line].value == tokens[index_token].value:
                     index_line += 1
                     index_token += 1
                 else:
                     raise Ex.ParserSyntaxError(f"Expected {line.content[index_line]}, got {tokens[index_token]}")
+            else:
+                raise Ex.ParserSyntaxError(f"Expected {line.content[index_line]}, got {tokens[index_token]}")
         return True
