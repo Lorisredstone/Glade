@@ -33,6 +33,7 @@ class Instruction:
                     else:
                         end_dict[attr].append(item)
         return end_dict
+        
 
 class Value(Instruction):
     def __init__(self, value:str, type:TYPES):

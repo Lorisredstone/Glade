@@ -3,9 +3,17 @@ import os
 
 import mod.colorprint as colorprint
 
+import argparse
+
+parser = argparse.ArgumentParser(description='Lance Glade')
+parser.add_argument('-i', dest='input', type=str, help='The input file', required=True)
+parser.add_argument('-o', dest='output', type=str, help='The output file', required=True)
+
+args = parser.parse_args()
+
 mypy_command = "mypy main.py"
 mypy_command = "mypy main.py"
-python_command = "python main.py"
+python_command = f"python main.py {args.input} {args.output}"
 
 # run mypy with subprocess
 p = subprocess.Popen(mypy_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
