@@ -1,18 +1,19 @@
 from typing import List, Dict, Union, Tuple, Any, Optional
 from enum import Enum, IntEnum, auto
 
-import src.py.lexerTokens as Tok
+import src.py_to_i.lexerTokens as Tok
 
 import mod.parser.parserlib as Plib
 
 class INST(IntEnum):
-    ASSIGN_VAR = 0
+    ASSIGN_VAR = auto()
 
 class TYPES(IntEnum):
-    INT = 0
-    FLOAT = 1
-    STRING = 2
-    BOOL = 3
+    TYPE = auto()
+    INT = auto()
+    FLOAT = auto()
+    STRING = auto()
+    BOOL = auto()
 
 # here we define the intermediate representation of the programme (IR) for every language
 class Instruction:
@@ -45,8 +46,19 @@ class Assign(Instruction):
         self.inst_type = INST.ASSIGN_VAR
 
 class Programme(Instruction):
-    def __init__(self, instructions:List[Instruction]):
+    def __init__(self, instructions:List[Instruction] = []):
         self.instructions:List[Instruction] = instructions
     
     def add_instruction(self, instruction:Instruction):
         self.instructions.append(instruction)
+        
+def infer_value(value:str) -> Value:
+    if value == "True" or value == "False":
+        return Value(value, TYPES.BOOL)
+    elif value.isdigit():
+        return Value(value, TYPES.INT)
+    elif value.replace('.', '', 1).isdigit():
+        return Value(value, TYPES.FLOAT)
+    else:
+        # on vire les guillemets
+        return Value(value[1:-1], TYPES.STRING)

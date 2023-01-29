@@ -1,6 +1,6 @@
 from typing import List, Dict, Union, Tuple, Any, Optional
 
-import src.py.lexerTokens as Tok
+import src.py_to_i.lexerTokens as Tok
 
 class Lexer:
     def __init__(self, raw_content:List[str]):

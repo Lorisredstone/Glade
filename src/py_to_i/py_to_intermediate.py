@@ -4,10 +4,11 @@ import subprocess
 import os
 import re
 
-from src.py.lexer import Lexer
-import src.py.py_parser as Py_parser
+from src.py_to_i.lexer import Lexer
+import src.py_to_i.py_parser as Py_parser
 
 import mod.colorprint as colorprint
+import mod.inter.interlib as Ilib
 
 class LocalTokens(IntEnum):
     INDENT = 0
@@ -28,7 +29,7 @@ class Pytointermediate:
     def __init__(self, file):
         self.file = file
         
-    def py_to_intermediate(self) -> int:
+    def py_to_intermediate(self) -> Ilib.Programme:
         # first we test the input file with mypy
         # if it passes, we convert the python file
         mypy_command = f"mypy {self.file}"
@@ -38,14 +39,13 @@ class Pytointermediate:
             exit(1)
         if p.stdout.read() == b'Success: no issues found in 1 source file\r\n':
             colorprint.colorprint(f"Mypy passed for {self.file} !", color = "green")
-            self.convert()
-            return 0
+            return self.convert()
         else:
             colorprint.colorprint(f"Mypy failed for {self.file} !", color = "red")
             os.system(mypy_command)
             exit(1)
             
-    def convert(self):
+    def convert(self) -> Ilib.Programme:
         # we convert the python file to an intermediate representation
         # we open the input file
         with open(self.file, "r") as f:

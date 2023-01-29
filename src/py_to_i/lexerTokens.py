@@ -17,41 +17,53 @@ SPECIAL:dict[str, str] = {
 class Token:
     type:str = ""
     value:str = ""
+    name_value:str = ""
     def __repr__(self) -> str:
         total = "<"
         total += self.__dict__.get('type', '')
         total += "("
         value = self.__dict__.get('value', '')
         total += value if value not in SPECIAL else SPECIAL[value]
-        total += ")>"
+        total += ")"
+        if self.__dict__.get('name_value', ''):
+            total += ", name_value=\""
+            total += self.__dict__.get('name_value', '')
+            total += "\""
+        total += ">"
         return total
     
 class Keyword(Token):
-    def __init__(self, value:str):
+    def __init__(self, value:str, name_value:str = ""):
+        self.name_value:str = name_value
         self.value:str = value
         self.type:str = "Keyword"
 
 class Operator(Token):
-    def __init__(self, value:str):
+    def __init__(self, value:str, name_value:str = ""):
+        self.name_value:str = name_value
         self.value:str = value
         self.type:str = "Operator"
 
 class Builtin(Token):
-    def __init__(self, value:str):
+    def __init__(self, value:str, name_value:str = ""):
+        self.name_value:str = name_value
         self.value:str = value
         self.type:str = "Builtin"
 
 class Literal(Token):
-    def __init__(self, value:str):
+    def __init__(self, value:str, name_value:str = ""):
+        self.name_value:str = name_value
         self.value:str = value
         self.type:str = "Literal"
 
 class Separator(Token):
-    def __init__(self, value:str):
+    def __init__(self, value:str, name_value:str = ""):
+        self.name_value:str = name_value
         self.value:str = value
         self.type:str = "Separator"
 
 class Identifier(Token):
-    def __init__(self, value:str):
+    def __init__(self, value:str, name_value:str = ""):
+        self.name_value:str = name_value
         self.value:str = value
         self.type:str = "Identifier"
